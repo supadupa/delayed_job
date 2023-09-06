@@ -1,3 +1,9 @@
+# Added ability to Exclude Queues from DJ worker
+
+This Repo consists of a PR to support queue exclusion from DJ workers, added to the v4.1.11 release of Delayed Job. See the original PR here: https://github.com/collectiveidea/delayed_job/pull/1019. Hopefully support will be merged into the official DJ repo and we can do away with this fork.
+
+# The original README
+
 **If you're viewing this at https://github.com/collectiveidea/delayed_job,
 you're reading the documentation for the master branch.
 [View documentation for the latest release
@@ -248,6 +254,9 @@ You can then do the following:
     RAILS_ENV=production script/delayed_job --queue=tracking start
     RAILS_ENV=production script/delayed_job --queues=mailers,tasks start
 
+    # Option --exclude-specified-queues will do inverse of queues processing by skipping onces from --queue, --queues.
+    # If both --pool=* --exclude-specified-queues given, no exclusions will by applied on "*".
+
     # Use the --pool option to specify a worker pool. You can use this option multiple times to start different numbers of workers for different queues.
     # The following command will start 1 worker for the tracking queue,
     # 2 workers for the mailers and tasks queues, and 2 workers for any jobs:
@@ -273,6 +282,9 @@ Work off queues by setting the `QUEUE` or `QUEUES` environment variable.
 
     QUEUE=tracking rake jobs:work
     QUEUES=mailers,tasks rake jobs:work
+
+If EXCLUDE_SPECIFIED_QUEUES set to YES, then queues defined by QUEUE, QUEUES will be skipped instead.
+See opton --exclude-specified-queues description for specal case of queue "*"
 
 Restarting delayed_job
 ======================
